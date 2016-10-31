@@ -7,18 +7,25 @@
 	<body>
 		<!--Login-->
 		<section> 
-			If you have an account, please log in:
+			<h1>If you have an account, please log in:</h1>
 			<form action="/login/" method="POST">
 
-				username: <input type="text" name="user">
-				password: <input type="password" name="pass">
+				username: <input type="text" name="user"> <br>
+				password: <input type="password" name="pass"> <br>
 				<input type="submit" name="button" value="Login" action="/auth/">
 			</form>
 
 		</section>
 		<!--Register-->
 		<section> 
-			If you want an account, please register:
+			<h1>If you want an account, please register:</h1>
+			<form action="/login/" method="POST">
+
+				username: <input type="text" name="user"> <br>
+				password: <input type="password" name="pass"> <br>
+				confirm password: <input type="password" name="confirm_pass"> <br>
+				<input type="submit" name="button" value="Register" action="/auth/">
+			</form>
 
 		</section>
 	</body>
