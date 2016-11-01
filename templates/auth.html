@@ -2,6 +2,22 @@
 <html>
 	<head>
 		<title>Authenticate</title>
+    <style>
+      section {
+        float: left;
+        max-width: 49%;
+        margin: 0;
+        padding: 1em;
+        overflow: hidden;
+      }
+
+      article {
+        margin-left: 50%;
+        border-left: 1px solid gray;
+        padding: 1em;
+        overflow: hidden;
+      }
+    </style>
 	</head>
 
 	<body>
@@ -10,24 +26,24 @@
 			<h1>If you have an account, please log in:</h1>
 			<form action="/login/" method="POST">
 
-				username: <input type="text" name="user"> <br>
-				password: <input type="password" name="pass"> <br>
+				Username: <input type="text" name="user"> <br>
+				Password: <input type="password" name="pass"> <br>
 				<input type="submit" name="button" value="Login" action="/auth/">
 			</form>
 
 		</section>
 		<!--Register-->
-		<section> 
+		<article> 
 			<h1>If you want an account, please register:</h1>
 			<form action="/login/" method="POST">
 
-				username: <input type="text" name="user"> <br>
-				password: <input type="password" name="pass"> <br>
-				confirm password: <input type="password" name="confirm_pass"> <br>
+				Username: <input type="text" name="user"> <br>
+				Password: <input type="password" name="pass"> <br>
+				Confirm password: <input type="password" name="confirm_pass"> <br>
 				<input type="submit" name="button" value="Register" action="/auth/">
 			</form>
 
-		</section>
+		</article>
 	</body>
 
 </html>
