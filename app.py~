@@ -60,6 +60,7 @@ def register():
 
 @app.route('/stories')
 def stories():
+	return render_template('home.html')
 
 if __name__ == '__main__':
   app.debug = True
