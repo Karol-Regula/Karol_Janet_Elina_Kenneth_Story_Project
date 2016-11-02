@@ -1,0 +1,48 @@
+/*auth.html*/
+section {
+    float: left;
+    max-width: 49%;
+    margin: 0;
+    padding: 1em;
+    overflow: hidden;
+}
+
+article {
+    margin-left: 50%;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+}
+/*end auth.html*/
+
+/*home.html*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: pink;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+
+/*end home.html*/
