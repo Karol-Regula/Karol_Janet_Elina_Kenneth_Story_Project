@@ -39,12 +39,22 @@ def login():
     username = request.form['username']
     password = request.form['password']
 
-    if authUser(username, hash(password)):
+    if db.authUser(username, hash(password)):
       session['username'] = username
 
   return redirect(url_for('default'))
 
-# @app.route('/register')
+# @app.route('/register', methods = ['POST'])
+def register():
+  if 'username' in request.form and 'password' in request.form:
+    username = request.form['username']
+    password = request.form['password']
+
+    if not db.isRegistered(username):
+      db.addUser(username, hash(password))
+      session['username'] = username
+
+  return redirect(url_for('default'))
 
 # @app.route('/logout')
 
