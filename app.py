@@ -3,6 +3,7 @@ from utils import misc, db
 
 app = Flask(__name__)
 app.secret_key = 'KEY'
+pointer = 0
 
 def isLoggedIn():
   return 'username' in session
@@ -13,6 +14,17 @@ def default():
     return redirect(url_for('stories'))
   else:
     return redirect(url_for('auth'))
+
+@app.route("/admin1")
+def createDB():
+    db.createDB()
+    pointer = db.initializeDB()
+    return render_template('auth.html')
+
+@app.route("/admin2")
+def initDB():
+    pointer = db.initializeDB()
+    return render_template('auth.html')
 
 @app.route('/auth')
 def auth():
