@@ -9,13 +9,13 @@
 
 		<!--navbar-->
 		<nav>
-			<form>
+			<form method="POST">
 				<ul>
 					<li><button href="">Home</button></li>
 
 					<div style=" background-color: grey;">
-					<li style="float: right;"><button href="">Log Out</button></li>
-					<li style="float: right;"><button href="">Account</button></li>
+					<li style="float: right;"><button formaction="/logout/">Log Out</button></li>
+					<li style="float: right;"><button formaction="/account/">Account</button></li>
 					<li style="float: right; display: block; text-align: center; padding: 14px 16px;"> {{user}} </li>
 					</div>
 				</ul>	
