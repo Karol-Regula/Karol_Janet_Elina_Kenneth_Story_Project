@@ -1,28 +1,10 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Home Page</title>
-		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
-	</head>
 
-	<body>
+{% extends "navbar.html" %}
 
-		<!--navbar-->
-		<form >
-			<li><button href="">Home</button></li>
-			<div>
-				<li style="float: right;"><button href="">Log Out</button></li>
-				<li style="float: right;"><button href="">Account</button></li>
-				<li style="float: right;"> {{user}} </li>
-			</div>	
-		</form>
-
-		<!--end navbar-->
-		<br>
-		<br>
-		<p>
-		The content of the document......
-		</p>	
-	</body>
-
-</html>
+{% block content %}
+	<ul class="dropdown">
+		<li class="menu">Create Story </li>
+		<li class="menu">Contribute </li>
+		<li class="menu">Contributed to</li> 
+	</ul>
+{% endblock %}
