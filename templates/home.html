@@ -1,10 +1,28 @@
 
 {% extends "navbar.html" %}
 
+{% block title %}
+	Home
+{% endblock %}
+
 {% block content %}
+	<button><h4>Create Story</h4></button> 
+
 	<ul class="dropdown">
-		<li class="menu">Create Story </li>
-		<li class="menu">Contribute </li>
-		<li class="menu">Contributed to</li> 
+
+		<ul class="menu">
+
+			<li><h4>Contribute</h4></li> 
+			{{avail_stories}}
+
+		</ul>
+
+		<ul class="menu">
+
+			<li><h4>Contributed to</h4></li> 
+			{{written_stories}} 
+
+		</ul>
+
 	</ul>
 {% endblock %}

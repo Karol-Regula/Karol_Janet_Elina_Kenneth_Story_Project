@@ -71,7 +71,7 @@ def logout():
 @app.route('/stories/')
 def stories():
   if isLoggedIn():
-    return render_template('home.html', user='user')
+    return render_template('home.html', user='NAME', avail_stories='FUNCTION TO PRINT STORIES AVAILABLE', written_stories='FUNCTION TO PRINT THE STORIES WRITTEN IN')
 
   return redirect(url_for(default))
 
