@@ -50,6 +50,14 @@ def isRegistered(username):
   print 'isRegistered %s' % username
   return True
 
+def getIDOfUser(username):
+  print 'getIDOfUser %s' % username
+  return 0
+
+def hasContributed(userID, storyID):
+  print 'hasContributed %d %d' % (userID, storyID)
+  return True
+
 def addUser(username, passhash):
   print 'addUser %s %s' % (username, passhash)
 

@@ -78,7 +78,9 @@ def stories():
 @app.route('/stories/<storyID>/')
 def getStoryID(storyID):
   if isLoggedIn():
+    username = session['username']
     userID = db.getIDOfUser(username)
+    storyID = int(storyID)
 
     if db.hasContributed(userID, storyID):
       story = db.getStory(storyID)
@@ -92,7 +94,9 @@ def getStoryID(storyID):
 @app.route('/stories/<storyID>/', methods = ['POST'])
 def postStoryID(storyID):
   if isLoggedIn():
+    username = session['username']
     userID = db.getIDOfUser(username)
+    storyID = int(storyID)
 
     if db.hasContributed(userID, storyID):
       return redirect(url_for('getStoryID'))
@@ -111,7 +115,9 @@ def getCreate():
 @app.route('/stories/create/', methods = ['POST'])
 def postCreate():
   if isLoggedIn():
+    username = session['username']
     userID = db.getIDOfUser(username)
+    storyID = int(storyID)
 
     if 'title' in request.form and 'body' in request.form:
       title = request.form['title']
