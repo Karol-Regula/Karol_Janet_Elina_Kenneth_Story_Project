@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Account Settings</title>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+	</head>
+
+	<body>
+		<!-- navbar -->
+		<!-- end navbar -->
+
+		<h1> Welcome {{user}} </h1>
+		<p> If you would like to change your password, enter your information below </p>
+		<form method = 'POST'>
+			Current password: <input type="password" name="currPass"> <br>
+			New password: <input type="password" name="newPass"> <br>
+			Confirm password: <input type="password" name="confirmPass"> <br>
+			<input type="submit" name="button" value="Change Password" action="//">
+		</form>
+				
+		
