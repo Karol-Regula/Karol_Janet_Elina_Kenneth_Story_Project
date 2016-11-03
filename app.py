@@ -15,63 +15,67 @@ def default():
 
   return redirect(url_for('auth'))
 
-@app.route("/admin1")
+@app.route('/admin1/')
 def createDB():
   db.createDB()
   pointer = db.initializeDB()
   return render_template('auth.html')
 
-@app.route("/admin2")
+@app.route('/admin2/')
 def initDB():
   pointer = db.initializeDB()
   return render_template('auth.html')
 
-@app.route('/auth')
+@app.route('/auth/')
 def auth():
   if isLoggedIn():
     return redirect(url_for('default'))
     
   return render_template('auth.html')
 
-@app.route('/login', methods = ['POST'])
+@app.route('/login/', methods = ['POST'])
 def login():
   if 'username' in request.form and 'password' in request.form:
     username = request.form['username']
     password = request.form['password']
+    print username, password
 
     if db.authUser(username, hash(password)):
       session['username'] = username
+      print username + ' logged in'
 
   return redirect(url_for('default'))
 
-@app.route('/register', methods = ['POST'])
+@app.route('/register/', methods = ['POST'])
 def register():
   if 'username' in request.form and 'password' in request.form:
     username = request.form['username']
     password = request.form['password']
     confirm = request.form['confirm_password']
+    print username, password, confirm
 
-    if password == confirm and not db.isRegistered(username):
+    if password == confirm: #and not db.isRegistered(username):
       db.addUser(username, hash(password))
       session['username'] = username
+      print username + ' registered'
 
   return redirect(url_for('default'))
 
-@app.route('/logout', methods = ['POST'])
+@app.route('/logout/', methods = ['POST'])
 def logout():
   if isLoggedIn():
     session.pop('username')
 
   return redirect(url_for('default'))
 
-@app.route('/stories')
+@app.route('/stories/')
 def stories():
   if isLoggedIn():
     return render_template('home.html', user='user')
 
   return redirect(url_for(default))
 
-@app.route('/stories/<storyID>')
+@app.route('/stories/<storyID>/')
 def getStoryID(storyID):
   if isLoggedIn():
     userID = db.getIDOfUser(username)
@@ -85,26 +89,26 @@ def getStoryID(storyID):
 
   return redirect(url_for('default'))
   
-@app.route('/stories/<storyID>', methods = ['POST'])
+@app.route('/stories/<storyID>/', methods = ['POST'])
 def postStoryID(storyID):
   if isLoggedIn():
     userID = db.getIDOfUser(username)
 
     if db.hasContributed(userID, storyID):
       return redirect(url_for('getStoryID'))
-    else if 'body' in request.form:
+    elif 'body' in request.form:
       db.addChapter(storyID, userID, request.form['body'])
 
   return redirect(url_for('default'))
 
-@app.route('/stories/create')
+@app.route('/stories/create/')
 def getCreate():
   if isLoggedIn():
     return render_template('new_story.html')
     
   return redirect(url_for('default'))      
   
-@app.route('/stories/create', methods = ['POST'])
+@app.route('/stories/create/', methods = ['POST'])
 def postCreate():
   if isLoggedIn():
     userID = db.getIDOfUser(username)
