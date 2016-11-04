@@ -48,7 +48,7 @@ def getStory(storyID):
 
 def isRegistered(username):
   print 'isRegistered %s' % username
-  return True
+  return False
 
 def getIDOfUser(username):
   print 'getIDOfUser %s' % username
