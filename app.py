@@ -12,28 +12,11 @@ def default():
   if isLoggedIn():
     return redirect(url_for('stories'))
 
-<<<<<<< HEAD
-@app.route('/auth')
-=======
-  return redirect(url_for('auth'))
-
-@app.route('/admin1/')
-def createDB():
-  db.createDB()
-  pointer = db.initializeDB()
-  return render_template('auth.html')
-
-@app.route('/admin2/')
-def initDB():
-  pointer = db.initializeDB()
-  return render_template('auth.html')
-
 @app.route('/auth/')
->>>>>>> 9823e2c54b30fb5ab20eb04ceea812c926b5588d
 def auth():
   if isLoggedIn():
     return redirect(url_for('default'))
-    
+
   return render_template('auth.html')
 
 @app.route('/login/', methods = ['POST'])
@@ -56,17 +39,13 @@ def register():
     password = request.form['password']
     confirm = request.form['confirm_password']
     print username, password, confirm
-
-<<<<<<< HEAD
   if not db.isRegistered(username):
     db.addUser( username, hash(password))
     session['username'] = username
-=======
     if password == confirm: #and not db.isRegistered(username):
       db.addUser(username, hash(password))
       session['username'] = username
       print username + ' registered'
->>>>>>> 9823e2c54b30fb5ab20eb04ceea812c926b5588d
 
   return redirect(url_for('default'))
 
@@ -99,7 +78,7 @@ def getStoryID(storyID):
       return render_template('contribute_story.html', chapter = chapter)
 
   return redirect(url_for('default'))
-  
+
 @app.route('/stories/<storyID>/', methods = ['POST'])
 def postStoryID(storyID):
   if isLoggedIn():
@@ -118,9 +97,9 @@ def postStoryID(storyID):
 def getCreate():
   if isLoggedIn():
     return render_template('new_story.html')
-    
-  return redirect(url_for('default'))      
-  
+
+  return redirect(url_for('default'))
+
 @app.route('/stories/create/', methods = ['POST'])
 def postCreate():
   if isLoggedIn():
@@ -132,8 +111,8 @@ def postCreate():
       title = request.form['title']
       body = request.form['body']
       db.createStory(userID, title, body)
-      
-  return redirect(url_for('default'))      
+
+  return redirect(url_for('default'))
 
 if __name__ == '__main__':
   app.debug = True
