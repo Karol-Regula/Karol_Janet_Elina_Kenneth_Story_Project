@@ -1,6 +1,7 @@
 import sqlite3
 
 def createDB():
+    return
 
 def insertUser(id, username, password):
     return
