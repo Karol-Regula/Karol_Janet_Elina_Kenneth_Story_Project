@@ -3,7 +3,6 @@ from utils import misc, db
 
 app = Flask(__name__)
 app.secret_key = 'KEY'
-pointer = 0
 
 def isLoggedIn():
   return 'username' in session
@@ -15,17 +14,6 @@ def default():
   else:
     return redirect(url_for('auth'))
 
-@app.route("/admin1")
-def createDB():
-    db.createDB()
-    pointer = db.initializeDB()
-    return render_template('auth.html')
-
-@app.route("/admin2")
-def initDB():
-    pointer = db.initializeDB()
-    return render_template('auth.html')
-
 @app.route('/auth')
 def auth():
   if isLoggedIn():
@@ -33,7 +21,7 @@ def auth():
   else:
     return render_template('auth.html')
 
-@app.route('/login', methods = ['POST'])
+@app.route('/login/', methods = ['POST'])
 def login():
   if 'username' in request.form and 'password' in request.form:
     username = request.form['username']
@@ -44,15 +32,15 @@ def login():
 
   return redirect(url_for('default'))
 
-# @app.route('/register', methods = ['POST'])
+@app.route('/register/', methods = ['POST'])
 def register():
-  if 'username' in request.form and 'password' in request.form:
+  if ('username' in request.form and 'password' in request.form):
     username = request.form['username']
     password = request.form['password']
 
-    if not db.isRegistered(username):
-      db.addUser(username, hash(password))
-      session['username'] = username
+  if not db.isRegistered(username):
+    db.addUser( username, hash(password))
+    session['username'] = username
 
   return redirect(url_for('default'))
 
