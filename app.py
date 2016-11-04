@@ -11,6 +11,8 @@ def isLoggedIn():
 def default():
   if isLoggedIn():
     return redirect(url_for('stories'))
+  else:
+    return redirect(url_for('auth'))
 
 @app.route('/auth/')
 def auth():
