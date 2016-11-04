@@ -19,16 +19,17 @@ def default():
 def createDB():
   db.createDB()
   pointer = db.initializeDB()
-  return render_template('auth.html')
+  return redirect(url_for('default'))
 
 @app.route('/admin2/')
 def initDB():
   pointer = db.initializeDB()
-  return render_template('auth.html')
+  return redirect(url_for('default'))
 
 @app.route('/auth/')
 def auth():
   if isLoggedIn():
+    flash('Already logged in!')
     return redirect(url_for('default'))
     
   return render_template('auth.html')
@@ -40,9 +41,14 @@ def login():
     password = request.form['password']
     print username, password
 
-    if db.authUser(username, hash(password)):
+    if db.authUser(username, misc.hash(password)):
       session['username'] = username
       print username + ' logged in'
+      flash('Successfully logged in!')
+    else:
+      flash('Incorrect username or password!')
+  else:
+    flash('Please fill out all fields!')
 
   return redirect(url_for('default'))
 
@@ -54,12 +60,15 @@ def register():
     confirm = request.form['confirm_password']
     print username, password, confirm
 
-    if password == confirm: #and not db.isRegistered(username):
-      db.addUser(username, hash(password))
-      session['username'] = username
-      print username + ' registered'
+    if password == confirm:
+      if not db.isRegistered(username):
+        db.addUser(username, misc.hash(password))
+        session['username'] = username
+        print username + ' registered'
+        return redirect(url_for('default'))
+        
 
-  return redirect(url_for('default'))
+  return 
 
 @app.route('/logout/', methods = ['POST'])
 def logout():
@@ -125,6 +134,20 @@ def postCreate():
       db.createStory(userID, title, body)
       
   return redirect(url_for('default'))      
+
+@app.route('/account/')
+def getAccount():
+  if isLoggedIn():
+    return render_template('account.html')
+
+  return redirect(url_for('default'))
+
+@app.route('/account/', methods = ['POST'])
+def postAccount():
+  if isLoggedIn():
+    
+
+  return redirect(url_for('default'))
 
 if __name__ == '__main__':
   app.debug = True
