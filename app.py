@@ -11,12 +11,24 @@ def isLoggedIn():
 def default():
   if isLoggedIn():
     return redirect(url_for('stories'))
-  else:
-    return redirect(url_for('auth'))
+
+  return redirect(url_for('auth'))
+
+@app.route('/admin1/')
+def createDB():
+  db.createDB()
+  pointer = db.initializeDB()
+  return redirect(url_for('default'))
+
+@app.route('/admin2/')
+def initDB():
+  pointer = db.initializeDB()
+  return redirect(url_for('default'))
 
 @app.route('/auth/')
 def auth():
   if isLoggedIn():
+    flash('Already logged in!')
     return redirect(url_for('default'))
   return render_template('auth.html')
 
@@ -29,6 +41,11 @@ def login():
     if db.authUser(username, misc.hash(password)):
       session['username'] = username
       print username + ' logged in'
+      flash('Successfully logged in!')
+    else:
+      flash('Incorrect username or password!')
+  else:
+    flash('Please fill out all fields!')
 
   return redirect(url_for('default'))
 
@@ -111,6 +128,18 @@ def postCreate():
       db.createStory(userID, title, body)
 
   return redirect(url_for('default'))
+
+@app.route('/account/')
+def getAccount():
+  if isLoggedIn():
+    return render_template('account.html')
+
+  return redirect(url_for('default'))
+
+@app.route('/account/', methods = ['POST'])
+def postAccount():
+  if isLoggedIn():
+    return redirect(url_for('default'))
 
 if __name__ == '__main__':
   app.debug = True
