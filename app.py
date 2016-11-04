@@ -18,7 +18,6 @@ def default():
 def auth():
   if isLoggedIn():
     return redirect(url_for('default'))
-
   return render_template('auth.html')
 
 @app.route('/login/', methods = ['POST'])
