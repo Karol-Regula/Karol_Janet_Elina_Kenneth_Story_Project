@@ -5,8 +5,11 @@ c = None
 db = None
 
 def createDB():
+  global c
+  initializeDB()
   c.execute("CREATE TABLE users (user_id INTEGER PRIMARY KEY, username TEXT, password TEXT);")
   c.execute("CREATE TABLE chapters (story_id INTEGER, chapter_id INTEGER, user_id INTEGER, title TEXT, body TEXT);")
+  closeDB()
   return
 
 def initializeDB():
@@ -24,11 +27,9 @@ def closeDB():
 
 def addUser(username, passhash):
   global c
-  global db
   initializeDB()
   print 'addUser %s %s' % (username, passhash)
   c.execute("INSERT INTO users (username, password) VALUES('" + username + "','" + passhash + "');")
-  #c.execute("INSERT INTO users VALUES " + (1 + ", b, c);")
   closeDB()
 
 def createStory(userID, title, body):
@@ -46,9 +47,15 @@ def getStory(storyID):
   return 'testStory %d' % storyID
 
 def isRegistered(username):
-  #checks if username already exists
+  global c
+  global db
+  initializeDB()
   print 'isRegistered %s' % username
-  return False
+  c.execute("SELECT * FROM users WHERE (username = '" + username + "');")
+  out = c.fetchall()
+  closeDB()
+  print out is not None
+  return out is not None
 
 def getIDOfUser(username):
   print 'getIDOfUser %s' % username
