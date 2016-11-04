@@ -29,11 +29,15 @@ def addUser(username, passhash):
   global c
   initializeDB()
   print 'addUser %s %s' % (username, passhash)
-  c.execute("INSERT INTO users (username, password) VALUES('" + username + "','" + passhash + "');")
+  c.execute("INSERT INTO users (username, password) VALUES('%s', '%s');" % (username, passhash))
   closeDB()
 
 def createStory(userID, title, body):
   print 'createStory %d %s %s' % (userID, title, body)
+  global c
+  initializeDB()
+  c.execute("INSERT INTO chapters (user_id, title, body) VALUES('" + userID + "', '" + title + "', '" + body + "');")
+  closeDB()
 
 def addChapter(storyID, userID, body):
   print 'addChapter %d %s %s' % (storyID, userID, body)
@@ -48,7 +52,6 @@ def getStory(storyID):
 
 def isRegistered(username):
   global c
-  global db
   initializeDB()
   print 'isRegistered %s' % username
   c.execute("SELECT * FROM users WHERE (username = '" + username + "');")
@@ -60,6 +63,12 @@ def isRegistered(username):
 
 def getIDOfUser(username):
   print 'getIDOfUser %s' % username
+  global c
+  initializeDB()
+  c.execute("SELECT user_id FROM users WHERE (username = '" + username + "');")
+  out = c.fetchall()
+  print out
+  closeDB()
   return 0
 
 def hasContributed(userID, storyID):

@@ -120,7 +120,7 @@ def postCreate():
   if isLoggedIn():
     username = session['username']
     userID = db.getIDOfUser(username)
-    storyID = int(storyID)
+    #storyID = int(storyID)
 
     if 'title' in request.form and 'body' in request.form:
       title = request.form['title']
