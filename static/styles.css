@@ -20,7 +20,7 @@ ul {
 	margin: 0;
 	padding: 0;
   overflow: hidden;
-  background-color: #333;
+  background-color: pink;
 }
 
 li {
@@ -30,13 +30,20 @@ li {
 
 li button {
   display: block;
-  color: white;
+  color: black;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+	background-color: pink;
+	border: pink;
 }
 
 /* Change the link color to #111 (black) on hover */
-li a:hover {
-  background-color: #111;
+li button:hover {
+  background-color: steelblue;
+	color: lightblue;
+}
+
+ul #dropdown {
+	background-color: white ! important;
 }
