@@ -41,11 +41,11 @@ def login():
     if db.authUser(username, misc.hash(password)):
       session['username'] = username
       print username + ' logged in'
-      flash('Successfully logged in!')
+      print('Successfully logged in!')
     else:
-      flash('Incorrect username or password!')
+      print('Incorrect username or password!')
   else:
-    flash('Please fill out all fields!')
+    print('Please fill out all fields!')
 
   return redirect(url_for('default'))
 

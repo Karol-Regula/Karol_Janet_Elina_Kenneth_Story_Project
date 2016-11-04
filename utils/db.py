@@ -54,8 +54,9 @@ def isRegistered(username):
   c.execute("SELECT * FROM users WHERE (username = '" + username + "');")
   out = c.fetchall()
   closeDB()
-  print out is not None
-  return out is not None
+  print out
+  print out != []
+  return out != []
 
 def getIDOfUser(username):
   print 'getIDOfUser %s' % username
@@ -67,4 +68,16 @@ def hasContributed(userID, storyID):
 
 def authUser(username, passhash):
   print 'authUser %s %s' % (username, passhash)
-  return True
+  global c
+  global db
+  initializeDB()
+  c.execute("SELECT password FROM users WHERE (username = '" + username + "');")
+  out = c.fetchall()
+  if out == []:
+    return False
+  out = str(out).split('\'')[1]
+  closeDB()
+  #print out
+  #print passhash
+  print out == passhash
+  return out == passhash
