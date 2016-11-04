@@ -3,7 +3,6 @@ from utils import misc, db
 
 app = Flask(__name__)
 app.secret_key = 'KEY'
-pointer = 0
 
 def isLoggedIn():
   return 'username' in session
@@ -31,7 +30,6 @@ def auth():
   if isLoggedIn():
     flash('Already logged in!')
     return redirect(url_for('default'))
-    
   return render_template('auth.html')
 
 @app.route('/login/', methods = ['POST'])
@@ -54,7 +52,7 @@ def login():
 
 @app.route('/register/', methods = ['POST'])
 def register():
-  if 'username' in request.form and 'password' in request.form:
+  if ('username' in request.form and 'password' in request.form):
     username = request.form['username']
     password = request.form['password']
     confirm = request.form['confirm_password']
@@ -65,10 +63,8 @@ def register():
         db.addUser(username, misc.hash(password))
         session['username'] = username
         print username + ' registered'
-        return redirect(url_for('default'))
-        
 
-  return 
+  return redirect(url_for('default'))
 
 @app.route('/logout/', methods = ['POST'])
 def logout():
@@ -99,7 +95,7 @@ def getStoryID(storyID):
       return render_template('contribute_story.html', chapter = chapter)
 
   return redirect(url_for('default'))
-  
+
 @app.route('/stories/<storyID>/', methods = ['POST'])
 def postStoryID(storyID):
   if isLoggedIn():
@@ -118,9 +114,9 @@ def postStoryID(storyID):
 def getCreate():
   if isLoggedIn():
     return render_template('new_story.html')
-    
-  return redirect(url_for('default'))      
-  
+
+  return redirect(url_for('default'))
+
 @app.route('/stories/create/', methods = ['POST'])
 def postCreate():
   if isLoggedIn():
@@ -132,8 +128,8 @@ def postCreate():
       title = request.form['title']
       body = request.form['body']
       db.createStory(userID, title, body)
-      
-  return redirect(url_for('default'))      
+
+  return redirect(url_for('default'))
 
 @app.route('/account/')
 def getAccount():
