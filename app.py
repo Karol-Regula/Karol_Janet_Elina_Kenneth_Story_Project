@@ -26,8 +26,7 @@ def login():
     username = request.form['username']
     password = request.form['password']
     print username, password
-
-    if db.authUser(username, hash(password)):
+    if db.authUser(username, misc.hash(password)):
       session['username'] = username
       print username + ' logged in'
 
@@ -40,13 +39,11 @@ def register():
     password = request.form['password']
     confirm = request.form['confirm_password']
     print username, password, confirm
-  if not db.isRegistered(username):
-    db.addUser( username, hash(password))
-    session['username'] = username
-    if password == confirm: #and not db.isRegistered(username):
-      db.addUser(username, hash(password))
-      session['username'] = username
-      print username + ' registered'
+    if not db.isRegistered(username):
+      if password == confirm: #and not db.isRegistered(username):
+        db.addUser(username, misc.hash(password))
+        session['username'] = username
+        print username + ' registered'
 
   return redirect(url_for('default'))
 

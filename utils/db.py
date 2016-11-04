@@ -1,27 +1,35 @@
 import sqlite3
 
-file = "data/data.db"
-db = sqlite3.connect(file)
-c = db.cursor()
+#global variables used for database
+c = None
+db = None
 
 def createDB():
-  c.execute("CREATE TABLE users (user_id INTEGER, username TEXT, password INTEGER);")
+  c.execute("CREATE TABLE users (user_id INTEGER PRIMARY KEY, username TEXT, password TEXT);")
   c.execute("CREATE TABLE chapters (story_id INTEGER, chapter_id INTEGER, user_id INTEGER, title TEXT, body TEXT);")
   return
 
 def initializeDB():
+  global c
+  global db
   file = "data/data.db"
   db = sqlite3.connect(file)
   c = db.cursor()
   return c
 
-def addUser(username, password):
-  print("Adding user.")
-  c.execute("INSERT INTO students VALUES('" + username + "','" + password + "');")
+def closeDB():
+  global db
+  db.commit()
+  db.close()
 
-def isRegistered(username):
-  #checks if username already exists
-  return False
+def addUser(username, passhash):
+  global c
+  global db
+  initializeDB()
+  print 'addUser %s %s' % (username, passhash)
+  c.execute("INSERT INTO users (username, password) VALUES('" + username + "','" + passhash + "');")
+  #c.execute("INSERT INTO users VALUES " + (1 + ", b, c);")
+  closeDB()
 
 def createStory(userID, title, body):
   print 'createStory %d %s %s' % (userID, title, body)
@@ -38,8 +46,9 @@ def getStory(storyID):
   return 'testStory %d' % storyID
 
 def isRegistered(username):
+  #checks if username already exists
   print 'isRegistered %s' % username
-  return True
+  return False
 
 def getIDOfUser(username):
   print 'getIDOfUser %s' % username
@@ -48,9 +57,6 @@ def getIDOfUser(username):
 def hasContributed(userID, storyID):
   print 'hasContributed %d %d' % (userID, storyID)
   return True
-
-def addUser(username, passhash):
-  print 'addUser %s %s' % (username, passhash)
 
 def authUser(username, passhash):
   print 'authUser %s %s' % (username, passhash)
