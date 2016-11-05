@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, url_for, redirect
+from flask import Flask, render_template, request, session, url_for, redirect, flash
 from utils import misc, db
 
 app = Flask(__name__)
@@ -40,12 +40,10 @@ def login():
     print username, password
     if db.authUser(username, misc.hash(password)):
       session['username'] = username
-      print username + ' logged in'
-      print('Successfully logged in!')
     else:
-      print('Incorrect username or password!')
+      flash('Incorrect username or password!')
   else:
-    print('Please fill out all fields!')
+    flash('Please fill out all fields!')
 
   return redirect(url_for('default'))
 
@@ -57,10 +55,15 @@ def register():
     confirm = request.form['confirm_password']
     print username, password, confirm
     if not db.isRegistered(username):
-      if password == confirm: #and not db.isRegistered(username):
+      if password == confirm:
         db.addUser(username, misc.hash(password))
         session['username'] = username
-        print username + ' registered'
+      else:
+        flash('Passwords must match!')
+    else:
+      flash('Username already in use!')
+  else:
+    flash('Please fill out all fields!')
 
   return redirect(url_for('default'))
 
@@ -120,7 +123,6 @@ def postCreate():
   if isLoggedIn():
     username = session['username']
     userID = db.getIDOfUser(username)
-    #storyID = int(storyID)
 
     if 'title' in request.form and 'body' in request.form:
       title = request.form['title']
