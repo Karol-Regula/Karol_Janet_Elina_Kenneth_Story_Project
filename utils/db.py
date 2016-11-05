@@ -7,15 +7,15 @@ db = None
 def createDB():
   global c
   initializeDB()
-  c.execute("CREATE TABLE users (user_id INTEGER PRIMARY KEY, username TEXT, password TEXT);")
-  c.execute("CREATE TABLE chapters (story_id INTEGER, chapter_id INTEGER, user_id INTEGER, title TEXT, body TEXT);")
+  c.execute('CREATE TABLE users (user_id INTEGER PRIMARY KEY, username TEXT, password TEXT);')
+  c.execute('CREATE TABLE chapters (story_id INTEGER, chapter_id INTEGER, user_id INTEGER, title TEXT, body TEXT);')
   closeDB()
   return
 
 def initializeDB():
   global c
   global db
-  file = "data/data.db"
+  file = 'data/data.db'
   db = sqlite3.connect(file)
   c = db.cursor()
   return c
@@ -29,14 +29,14 @@ def addUser(username, passhash):
   global c
   initializeDB()
   print 'addUser %s %s' % (username, passhash)
-  c.execute("INSERT INTO users (username, password) VALUES('%s', '%s');" % (username, passhash))
+  c.execute('INSERT INTO users (username, password) VALUES(\'%s\', \'%s\');' % (username, passhash))
   closeDB()
 
 def createStory(userID, title, body):
   print 'createStory %d %s %s' % (userID, title, body)
   global c
   initializeDB()
-  c.execute("INSERT INTO chapters (user_id, title, body) VALUES('" + userID + "', '" + title + "', '" + body + "');")
+  c.execute('INSERT INTO chapters (user_id, title, body) VALUES(\'%d\', \'%s\', \'%s\');' % (userID, title, body))
   closeDB()
 
 def addChapter(storyID, userID, body):
@@ -54,7 +54,7 @@ def isRegistered(username):
   global c
   initializeDB()
   print 'isRegistered %s' % username
-  c.execute("SELECT * FROM users WHERE (username = '" + username + "');")
+  c.execute('SELECT * FROM users WHERE (username = \'%s\');' % username)
   out = c.fetchall()
   closeDB()
   print out
@@ -65,7 +65,7 @@ def getIDOfUser(username):
   print 'getIDOfUser %s' % username
   global c
   initializeDB()
-  c.execute("SELECT user_id FROM users WHERE (username = '" + username + "');")
+  c.execute('SELECT user_id FROM users WHERE (username = \'%s\');' % username)
   out = c.fetchall()
   print out
   closeDB()
@@ -80,7 +80,7 @@ def authUser(username, passhash):
   global c
   global db
   initializeDB()
-  c.execute("SELECT password FROM users WHERE (username = '" + username + "');")
+  c.execute('SELECT password FROM users WHERE (username = \'%s\');' % username)
   out = c.fetchall()
   if out == []:
     return False
