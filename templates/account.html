@@ -1,18 +1,24 @@
-
 {% extends "navbar.html" %}
 
 {% block title %}
-	Account Settings
+Account Settings
 {% endblock %}
 
 {% block content %}
-		<h1> Welcome {{user}} </h1>
-		<p> If you would like to change your password, enter your information below </p>
-		<form method = 'POST'>
-			Current password: <input type="password" name="curr_pass"> <br>
-			New password: <input type="password" name="new_pass"> <br>
-			Confirm password: <input type="password" name="confirm_pass"> <br>
-			<input type="submit" name="button" value="Change Password" action="/account/">
-		</form>
+<h1> Welcome {{user}} </h1>
+<p> If you would like to change your password, enter your information below </p>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<form method = "POST" action="/account/">
+	Current password: <input type="password" name="cur_pass"> <br>
+	New password: <input type="password" name="new_pass"> <br>
+	Confirm password: <input type="password" name="confirm_pass"> <br>
+	<input type="submit" name="button" value="Change Password" action="/account/">
+</form>
 {% endblock %}		
-		
+

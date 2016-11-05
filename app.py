@@ -141,6 +141,26 @@ def getAccount():
 @app.route('/account/', methods = ['POST'])
 def postAccount():
   if isLoggedIn():
+    if 'cur_pass' in request.form and 'new_pass' in request.form and 'confirm_pass' in request.form:
+      username = session['username']
+      curPass = request.form['cur_pass']
+      newPass = request.form['new_pass']
+      confirmPass = request.form['confirm_pass']
+
+      if db.authUser(username, misc.hash(curPass)):
+        if newPass == confirmPass:
+          userID = db.getIDOfUser(username)
+          db.changePassword(userID, misc.hash(newPass))
+          flash('Password changed successfully!')
+        else:
+          flash('Passwords must match!')
+      else:
+        flash('Incorrect password!')
+    else:
+      flash('Please fill out all fields!')
+
+    return render_template('account.html')
+  else:
     return redirect(url_for('default'))
 
 if __name__ == '__main__':
