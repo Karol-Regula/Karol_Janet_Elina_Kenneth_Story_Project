@@ -7,13 +7,6 @@ Account Settings
 {% block content %}
 <h1> Welcome {{user}} </h1>
 <p> If you would like to change your password, enter your information below </p>
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    {% for message in messages %}
-      {{ message }}
-    {% endfor %}
-  {% endif %}
-{% endwith %}
 <form method = "POST" action="/account/">
 	Current password: <input type="password" name="cur_pass"> <br>
 	New password: <input type="password" name="new_pass"> <br>
