@@ -1,0 +1,49 @@
+/*auth*/
+section {
+	float: left;
+	max-width: 49%;
+	margin: 0;
+	padding: 1em;
+	overflow: hidden;
+}
+
+article {
+  margin-left: 50%;
+  border-left: 1px solid gray;
+  padding: 1em;
+  overflow: hidden;
+}
+
+/*home*/
+ul {
+	list-style-type: none; 
+	margin: 0;
+	padding: 0;
+  overflow: hidden;
+  background-color: pink;
+}
+
+li {
+  float: left;
+	display: inline;
+}
+
+li button {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+	background-color: pink;
+	border: pink;
+}
+
+/* Change the link color to #111 (black) on hover */
+li button:hover {
+  background-color: steelblue;
+	color: lightblue;
+}
+
+ul #dropdown {
+	background-color: white ! important;
+}

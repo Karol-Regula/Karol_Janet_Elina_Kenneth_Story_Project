@@ -2,29 +2,36 @@
 <html>
 	<head>
 		<title>Authenticate</title>
-		<link rel="stylesheet" href="styles.css">
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
 	</head>
 
 	<body>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 		<!--Login-->
-		<section> 
+		<section>
 			<h1>If you have an account, please log in:</h1>
 			<form action="/login/" method="POST">
 
-				Username: <input type="text" name="user"> <br>
-				Password: <input type="password" name="pass"> <br>
+				Username: <input type="text" name="username"> <br>
+				Password: <input type="password" name="password"> <br>
 				<input type="submit" name="button" value="Login" action="/auth/">
 			</form>
 
 		</section>
 		<!--Register-->
-		<article> 
+		<article>
 			<h1>If you want an account, please register:</h1>
-			<form action="/login/" method="POST">
+			<form action="/register/" method="POST">
 
-				Username: <input type="text" name="user"> <br>
-				Password: <input type="password" name="pass"> <br>
-				Confirm password: <input type="password" name="confirm_pass"> <br>
+				Username: <input type="text" name="username"> <br>
+				Password: <input type="password" name="password"> <br>
+				Confirm password: <input type="password" name="confirm_password"> <br>
 				<input type="submit" name="button" value="Register" action="/auth/">
 			</form>
 

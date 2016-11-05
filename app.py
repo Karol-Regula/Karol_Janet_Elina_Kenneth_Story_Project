@@ -1,22 +1,146 @@
 from flask import Flask, render_template, request, session, url_for, redirect
+from utils import misc, db
 
 app = Flask(__name__)
-app.secret_key = "KEY"
+app.secret_key = 'KEY'
 
-@app.route("/")
+def isLoggedIn():
+  return 'username' in session
+
+@app.route('/')
+def default():
+  if isLoggedIn():
+    return redirect(url_for('stories'))
+
+  return redirect(url_for('auth'))
+
+@app.route('/admin1/')
+def createDB():
+  db.createDB()
+  pointer = db.initializeDB()
+  return redirect(url_for('default'))
+
+@app.route('/admin2/')
+def initDB():
+  pointer = db.initializeDB()
+  return redirect(url_for('default'))
+
+@app.route('/auth/')
+def auth():
+  if isLoggedIn():
+    flash('Already logged in!')
+    return redirect(url_for('default'))
+  return render_template('auth.html')
+
+@app.route('/login/', methods = ['POST'])
 def login():
-    return render_template('auth.html')
+  if 'username' in request.form and 'password' in request.form:
+    username = request.form['username']
+    password = request.form['password']
+    print username, password
+    if db.authUser(username, misc.hash(password)):
+      session['username'] = username
+      print username + ' logged in'
+      print('Successfully logged in!')
+    else:
+      print('Incorrect username or password!')
+  else:
+    print('Please fill out all fields!')
 
-#@app.route("/auth")
+  return redirect(url_for('default'))
 
-#@app.route("/login")
+@app.route('/register/', methods = ['POST'])
+def register():
+  if ('username' in request.form and 'password' in request.form):
+    username = request.form['username']
+    password = request.form['password']
+    confirm = request.form['confirm_password']
+    print username, password, confirm
+    if not db.isRegistered(username):
+      if password == confirm: #and not db.isRegistered(username):
+        db.addUser(username, misc.hash(password))
+        session['username'] = username
+        print username + ' registered'
 
-#@app.route("/register")
+  return redirect(url_for('default'))
 
-#@app.route("/logout")
+@app.route('/logout/', methods = ['POST'])
+def logout():
+  if isLoggedIn():
+    session.pop('username')
 
-#@app.route("/stories")
+  return redirect(url_for('default'))
+
+@app.route('/stories/')
+def stories():
+  if isLoggedIn():
+    return render_template('home.html', user='NAME', avail_stories='FUNCTION TO PRINT STORIES AVAILABLE', written_stories='FUNCTION TO PRINT THE STORIES WRITTEN IN')
+
+  return redirect(url_for(default))
+
+@app.route('/stories/<storyID>/')
+def getStoryID(storyID):
+  if isLoggedIn():
+    username = session['username']
+    userID = db.getIDOfUser(username)
+    storyID = int(storyID)
+
+    if db.hasContributed(userID, storyID):
+      story = db.getStory(storyID)
+      return render_template('full_story.html', story = story)
+    else:
+      chapter = db.getLatestChapter(id)
+      return render_template('contribute_story.html', chapter = chapter)
+
+  return redirect(url_for('default'))
+
+@app.route('/stories/<storyID>/', methods = ['POST'])
+def postStoryID(storyID):
+  if isLoggedIn():
+    username = session['username']
+    userID = db.getIDOfUser(username)
+    storyID = int(storyID)
+
+    if db.hasContributed(userID, storyID):
+      return redirect(url_for('getStoryID'))
+    elif 'body' in request.form:
+      db.addChapter(storyID, userID, request.form['body'])
+
+  return redirect(url_for('default'))
+
+@app.route('/stories/create/')
+def getCreate():
+  if isLoggedIn():
+    return render_template('new_story.html')
+
+  return redirect(url_for('default'))
+
+@app.route('/stories/create/', methods = ['POST'])
+def postCreate():
+  if isLoggedIn():
+    username = session['username']
+    userID = db.getIDOfUser(username)
+    #storyID = int(storyID)
+
+    if 'title' in request.form and 'body' in request.form:
+      title = request.form['title']
+      body = request.form['body']
+      db.createStory(userID, title, body)
+
+  return redirect(url_for('default'))
+
+@app.route('/account/')
+def getAccount():
+  if isLoggedIn():
+    return render_template('account.html')
+
+  return redirect(url_for('default'))
+
+@app.route('/account/', methods = ['POST'])
+def postAccount():
+  if isLoggedIn():
+    return redirect(url_for('default'))
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run()
+  app.debug = True
+  app.run()

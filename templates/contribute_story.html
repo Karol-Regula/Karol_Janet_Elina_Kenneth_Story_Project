@@ -1,0 +1,22 @@
+{% extends "navbar.html" %}
+
+{% block title %}
+	Contribute
+{% endblock %}
+
+<center>
+{% block content %}
+
+<h2>{{Title}}</h2>
+
+{{chapter}}
+<br>
+	<h6>Please continue this story</h6>
+	<form action="POST">
+		<textarea style="width:90%; height:50%;">
+
+		</textarea>
+		<button> Submit Chapter </button>
+	</form>
+{% endblock %}
+</center>

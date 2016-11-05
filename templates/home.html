@@ -1,27 +1,30 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-	<title>Home Page</title>
-	<link rel="stylesheet" href="styles.css">
 
-</head>
+{% extends "navbar.html" %}
 
-<body>
+{% block title %}
+	Home
+{% endblock %}
 
-	<!--navbar-->
-	<ul>
-		<li><a href="">Home</a></li>
-		<li style="float:right"><a href="">Log Out</a></li>
-		<li style="float:right"><a href="">Account</a></li>
-		<li style="padding: 14px; float:right"> {{user}} </li>
+{% block content %}
+	<form action="GET">
+		<button formaction="/stories/create/"><h4>Create Story</h4></button> 
+	</form>
+	<ul class="dropdown">
+
+		<ul class="menu">
+
+			<li><h4>Contribute</h4></li> 
+			{{avail_stories}}
+
+		</ul>
+
+		<ul class="menu">
+
+			<li><h4>Contributed to</h4></li> 
+			{{written_stories}} 
+
+		</ul>
+
 	</ul>
-	<!--end navbar-->
-
-
-	The content of the document...
-
-
-</body>
-
-</html>
+{% endblock %}

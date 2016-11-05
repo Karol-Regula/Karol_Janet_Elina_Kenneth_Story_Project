@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block title %} TITLE {% endblock %}</title>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+	</head>
+		
+	<body>
+
+		<!--navbar-->
+		<nav>
+				<ul>
+			<form method="GET">
+					<li><button formaction="/stories/">Home</button></li>
+
+			</form>
+
+			<form method="POST">
+					<li style="float: right;"><button formaction="/logout/">Log Out</button></li>
+			</form>
+			<form method="GET">
+					<li style="float: right;"><button formaction="/account/">Account</button></li>
+			</form>
+					<li style="float: right; display: block; text-align: center; padding: 14px 16px;"> {{user}} </li>
+				</ul>	
+		</nav>
+		<!--end navbar-->
+		<p>		
+			{% block content %}
+				content
+			{% endblock %}
+		</p>	
+	</body>
+
+</html>
