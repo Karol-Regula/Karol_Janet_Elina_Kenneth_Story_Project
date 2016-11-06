@@ -183,13 +183,19 @@ def getNotContributedStories(userID):
   titles = []
   closeDB()
   i = 0
+  append = True
   print out
   while i < len(out):
+    append = True
     current = []
     current.append(str(out[i][0]))
     current.append(int(out[i][1]))
     if (not hasContributed(userID, int(out[i][1]))):
-      titles.append(current)
+      for j in titles:
+        if j == current:
+          append = False
+      if append:
+        titles.append(current)
     i += 1
   print titles
   return titles
