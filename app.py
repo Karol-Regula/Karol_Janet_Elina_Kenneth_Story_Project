@@ -81,7 +81,7 @@ def stories():
     userID = db.getIDOfUser(username)
     return render_template('home.html', user=session['username'], avail_stories=db.getContributedStories(userID), written_stories=db.getContributedStories(userID))
 
-  return redirect(url_for(default))
+  return redirect(url_for('default'))
 
 @app.route('/stories/<storyID>/')
 def getStoryID(storyID):
