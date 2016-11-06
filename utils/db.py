@@ -8,7 +8,7 @@ def createDB():
   global c
   initializeDB()
   c.execute('CREATE TABLE users (user_id INTEGER PRIMARY KEY, username TEXT, password TEXT);')
-  c.execute('CREATE TABLE chapters (story_id INTEGER PRIMARY KEY, chapter_id INTEGER, user_id INTEGER, title TEXT, body TEXT);')
+  c.execute('CREATE TABLE chapters (story_id INTEGER, chapter_id INTEGER, user_id INTEGER, title TEXT, body TEXT);')
   closeDB()
   return
 
@@ -36,7 +36,15 @@ def createStory(userID, title, body):
   print 'createStory %d %s %s' % (userID, title, body)
   global c
   initializeDB()
-  c.execute('INSERT INTO chapters (user_id, title, body) VALUES(\'%d\', \'%s\', \'%s\');' % (userID, title, body))
+  c.execute('SELECT story_id FROM chapters;')
+  out = c.fetchall()
+  if len(out) == 0:
+    storyID = 0
+  else:
+    out = out[-1]
+    storyID = out[0] + 1
+  print storyID
+  c.execute('INSERT INTO chapters (story_id, user_id, title, body) VALUES(\'%d\', \'%d\', \'%s\', \'%s\');' % (storyID, userID, title, body))
   closeDB()
 
 def addChapter(storyID, userID, body):
@@ -67,8 +75,8 @@ def getIDOfUser(username):
   initializeDB()
   c.execute('SELECT user_id FROM users WHERE (username = \'%s\');' % username)
   out = c.fetchall()
-  out = out[0]
-  out = out[0]
+  out = out[0]#list
+  out = out[0]#tuple
   #print out
   closeDB()
   return out
