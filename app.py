@@ -95,7 +95,7 @@ def getStoryID(storyID):
       story = db.getStory(storyID)
       return render_template('full_story.html', user=session['username'], title = title, story = story)
     else:
-      chapter = db.getLatestChapter(id)
+      chapter = db.getLatestChapter(storyID)
       return render_template('contribute_story.html', user=session['username'], title = title, chapter = chapter)
 
   return redirect(url_for('default'))

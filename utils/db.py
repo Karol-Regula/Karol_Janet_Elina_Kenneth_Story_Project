@@ -52,7 +52,16 @@ def addChapter(storyID, userID, body):
 
 def getLatestChapter(storyID):
   print 'getLatestChapter %s' % storyID
-  return
+  global c
+  initializeDB()
+  c.execute('SELECT body FROM chapters WHERE (story_id = \'%s\');' % storyID)
+  out = c.fetchall()
+  print out
+  closeDB()
+  chapter = ""
+  i = len(out)
+  chapter = str(out[i - 1][0])
+  return chapter
 
 def getStory(storyID):
   print 'getStory %d' % storyID
@@ -64,7 +73,7 @@ def getStory(storyID):
   story = ""
   i = 0
   while i < len(out):
-    add = str(out[i])[7:]
+    add = str(out[i])[3:]
     add = add[:-3]
     story += '\n ' + add
     i += 1
