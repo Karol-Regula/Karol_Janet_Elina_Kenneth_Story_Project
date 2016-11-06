@@ -89,14 +89,14 @@ def getStoryID(storyID):
     username = session['username']
     userID = db.getIDOfUser(username)
     storyID = int(storyID)
-    title = db.getStoryTitle()
+    title = db.getStoryTitle(storyID)
 
     if db.hasContributed(userID, storyID):
       story = db.getStory(storyID)
       return render_template('full_story.html', user=session['username'], title = title, story = story)
     else:
       chapter = db.getLatestChapter(storyID)
-      return render_template('contribute_story.html', user=session['username'], title = title, chapter = chapter)
+      return render_template('contribute_story.html', user=session['username'], title = title, chapter = chapter, storyID = storyID)
 
   return redirect(url_for('default'))
 
@@ -106,11 +106,12 @@ def postStoryID(storyID):
     username = session['username']
     userID = db.getIDOfUser(username)
     storyID = int(storyID)
+    title = db.getStoryTitle(storyID)
 
     if db.hasContributed(userID, storyID):
       return redirect(url_for('getStoryID'))
     elif 'body' in request.form:
-      db.addChapter(storyID, userID, request.form['body'])
+      db.addChapter(storyID, userID, title, request.form['body'])
 
   return redirect(url_for('default'))
 

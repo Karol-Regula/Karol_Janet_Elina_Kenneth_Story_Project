@@ -47,8 +47,16 @@ def createStory(userID, title, body):
   c.execute('INSERT INTO chapters (story_id, chapter_id, user_id, title, body) VALUES(\'%d\', \'%d\', \'%d\', \'%s\', \'%s\');' % (storyID, 0, userID, title, body))
   closeDB()
 
-def addChapter(storyID, userID, body):
+def addChapter(storyID, userID, title, body):
   print 'addChapter %d %s %s' % (storyID, userID, body)
+  global c
+  initializeDB()
+  c.execute('SELECT chapter_id FROM chapters WHERE(story_id = \'%d\');' % storyID)
+  out = c.fetchall()
+  lastChapter = out[len(out) - 1][0]
+  c.execute('INSERT INTO chapters (story_id, chapter_id, user_id, title, body) VALUES(\'%d\', \'%d\', \'%d\', \'%s\', \'%s\');' % (storyID, lastChapter + 1, userID, title, body))
+  closeDB()
+  return
 
 def getLatestChapter(storyID):
   print 'getLatestChapter %s' % storyID
@@ -135,7 +143,7 @@ def authUser(username, passhash):
 def changePassword():
   return true
 
-def getStoryTitle():
+def getStoryTitle(storyID):
   return "Placeholder Title"
 
 def getContributedStories(userID):
