@@ -8,7 +8,7 @@ def createDB():
   global c
   initializeDB()
   c.execute('CREATE TABLE users (user_id INTEGER PRIMARY KEY, username TEXT, password TEXT);')
-  c.execute('CREATE TABLE chapters (story_id INTEGER, chapter_id INTEGER, user_id INTEGER, title TEXT, body TEXT);')
+  c.execute('CREATE TABLE chapters (story_id INTEGER PRIMARY KEY, chapter_id INTEGER, user_id INTEGER, title TEXT, body TEXT);')
   closeDB()
   return
 
@@ -43,8 +43,8 @@ def addChapter(storyID, userID, body):
   print 'addChapter %d %s %s' % (storyID, userID, body)
 
 def getLatestChapter(storyID):
-  print 'getLatestChapter %d' % storyID
-  return 'testChapter %d' % storyID
+  print 'getLatestChapter %d' % storyIDs
+  return
 
 def getStory(storyID):
   print 'getStory %d' % storyID
@@ -67,9 +67,11 @@ def getIDOfUser(username):
   initializeDB()
   c.execute('SELECT user_id FROM users WHERE (username = \'%s\');' % username)
   out = c.fetchall()
-  print out
+  out = out[0]
+  out = out[0]
+  #print out
   closeDB()
-  return 0
+  return out
 
 def hasContributed(userID, storyID):
   print 'hasContributed %d %d' % (userID, storyID)
@@ -90,3 +92,6 @@ def authUser(username, passhash):
   #print passhash
   print out == passhash
   return out == passhash
+
+def changePassword():
+  return true
