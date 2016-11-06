@@ -95,7 +95,18 @@ def getIDOfUser(username):
 
 def hasContributed(userID, storyID):
   print 'hasContributed %d %d' % (userID, storyID)
-  return True
+  global c
+  initializeDB()
+  c.execute('SELECT user_id FROM chapters WHERE (story_id = \'%d\');' % storyID)
+  out = c.fetchall()
+  closeDB()
+  print "hasContributedOUT" + str(out)
+  i = 0
+  while i < len(out):
+    if out[i][0] == userID:
+      return True
+    i += 1
+  return False
 
 def authUser(username, passhash):
   print 'authUser %s %s' % (username, passhash)
