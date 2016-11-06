@@ -114,7 +114,7 @@ def postStoryID(storyID):
 @app.route('/stories/create/')
 def getCreate():
   if isLoggedIn():
-    return render_template('new_story.html')
+    return render_template('new_story.html', user='NAME')
 
   return redirect(url_for('default'))
 
@@ -134,7 +134,7 @@ def postCreate():
 @app.route('/account/')
 def getAccount():
   if isLoggedIn():
-    return render_template('account.html')
+    return render_template('account.html', user='NAME')
 
   return redirect(url_for('default'))
 
@@ -159,7 +159,7 @@ def postAccount():
     else:
       flash('Please fill out all fields!')
 
-    return render_template('account.html')
+    return render_template('account.html', user='NAME')
   else:
     return redirect(url_for('default'))
 
