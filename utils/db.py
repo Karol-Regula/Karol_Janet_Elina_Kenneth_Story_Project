@@ -173,3 +173,23 @@ def getContributedStories(userID):
     i += 1
   print titles
   return titles
+
+def getNotContributedStories(userID):
+  print 'getContributedStories'
+  global c
+  initializeDB()
+  c.execute('SELECT title, story_id FROM chapters WHERE (user_id != %d);' % userID)
+  out = c.fetchall()
+  titles = []
+  closeDB()
+  i = 0
+  print out
+  while i < len(out):
+    current = []
+    current.append(str(out[i][0]))
+    current.append(int(out[i][1]))
+    if (not hasContributed(userID, int(out[i][1]))):
+      titles.append(current)
+    i += 1
+  print titles
+  return titles

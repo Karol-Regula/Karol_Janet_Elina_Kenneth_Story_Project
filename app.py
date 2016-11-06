@@ -79,7 +79,7 @@ def stories():
   if isLoggedIn():
     username = session['username']
     userID = db.getIDOfUser(username)
-    return render_template('home.html', user=session['username'], avail_stories=db.getContributedStories(userID), written_stories=db.getContributedStories(userID))
+    return render_template('home.html', user=session['username'], avail_stories=db.getNotContributedStories(userID), written_stories=db.getContributedStories(userID))
 
   return redirect(url_for('default'))
 
