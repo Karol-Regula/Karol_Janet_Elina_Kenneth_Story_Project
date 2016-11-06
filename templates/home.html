@@ -14,18 +14,18 @@ Home
   <div class="dropdown" id="dropdown1">
     <button class="dropbtn">Contribute</button>
     <div class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
+      {% for story in avail_stories %}
+        <a href="/stories/{{story[1]}}/">{{story[0]}}</a>
+      {% endfor %}
     </div>
   </div>
 
   <div class="dropdown" id="dropdown2">
     <button class="dropbtn">Contributed to</button>
     <div class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
+      {% for story in written_stories %}
+        <a href="/stories/{{story[1]}}/">{{story[0]}}</a>
+      {% endfor %}
     </div>
   </div>
 {% endblock %}
