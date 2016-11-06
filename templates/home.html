@@ -8,21 +8,24 @@ Home
 	<form action="GET">
 		<button formaction="/stories/create/"><h4>Create Story</h4></button> 
 	</form>
-	<ul class="dropdown">
+  
+  <br>
 
-		<ul class="menu">
+  <div class="dropdown" id="dropdown1">
+    <button class="dropbtn">Contribute</button>
+    <div class="dropdown-content">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </div>
+  </div>
 
-			<li><h4>Contribute</h4></li> 
-			{{avail_stories}}
-
-		</ul>
-
-		<ul class="menu">
-
-			<li><h4>Contributed to</h4></li> 
-			{{written_stories}} 
-
-		</ul>
-
-	</ul>
+  <div class="dropdown" id="dropdown2">
+    <button class="dropbtn">Contributed to</button>
+    <div class="dropdown-content">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </div>
+  </div>
 {% endblock %}
