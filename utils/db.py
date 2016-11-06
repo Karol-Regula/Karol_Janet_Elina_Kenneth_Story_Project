@@ -51,12 +51,24 @@ def addChapter(storyID, userID, body):
   print 'addChapter %d %s %s' % (storyID, userID, body)
 
 def getLatestChapter(storyID):
-  print 'getLatestChapter %d' % storyIDs
+  print 'getLatestChapter %s' % storyID
   return
 
 def getStory(storyID):
   print 'getStory %d' % storyID
-  return 'Placeholder Story Content %d' % storyID
+  global c
+  initializeDB()
+  c.execute('SELECT body FROM chapters WHERE (story_id = \'%s\');' % storyID)
+  out = c.fetchall()
+  closeDB()
+  story = ""
+  i = 0
+  while i < len(out):
+    add = str(out[i])[7:]
+    add = add[:-3]
+    story += '\n ' + add
+    i += 1
+  return story
 
 def isRegistered(username):
   global c
