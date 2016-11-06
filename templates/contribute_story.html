@@ -4,17 +4,17 @@
 	Contribute
 {% endblock %}
 
-<center>
 {% block content %}
+<center>
+  <h2>{{title}}</h2>
 
-<h2>{{title}}</h2>
-
-{{chapter}}
-<br>
+  {{chapter}}
+  <br>
 	<h6>Please continue this story</h6>
 	<form action="/stories/{{storyID}}/" method="POST">
 		<textarea rows="5" cols="100" name = "body"></textarea>
 		<button type="submit" action="/stories/{{storyID}}/"> Submit Chapter </button>
 	</form>
-{% endblock %}
 </center>
+{% endblock %}
+
