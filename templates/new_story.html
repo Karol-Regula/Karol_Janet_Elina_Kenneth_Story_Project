@@ -6,13 +6,13 @@
 
 {% block content %}
 	<center>
-	<h2> Please enter a title</h2>
-	<form action="/stories/create/" method="POST">
-		Title: <input type="text" name="title"> <br>
-		<h6> Please begin the story</h6>
-		<textarea name="body" rows="5" cols="100"></textarea>
-		<br>
-		<input type="submit" name="button" value="Create Story" action="/stories/create/">
-	</form>
+    <h2> Please enter a title</h2>
+    <form action="/stories/create/" method="POST">
+      Title: <input type="text" name="title"> <br>
+      <h6> Please begin the story</h6>
+      <textarea name="body" rows="5" cols="100"></textarea>
+      <br>
+      <input type="submit" name="button" value="Create Story" action="/stories/create/">
+    </form>
 	</center>
 {% endblock %}
