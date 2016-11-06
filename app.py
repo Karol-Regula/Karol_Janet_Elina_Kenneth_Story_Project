@@ -77,7 +77,9 @@ def logout():
 @app.route('/stories/')
 def stories():
   if isLoggedIn():
-    return render_template('home.html', user=session['username'], avail_stories='FUNCTION TO PRINT STORIES AVAILABLE', written_stories='FUNCTION TO PRINT THE STORIES WRITTEN IN')
+    username = session['username']
+    userID = db.getIDOfUser(username)
+    return render_template('home.html', user=session['username'], avail_stories=db.getContributedStories(userID), written_stories=db.getContributedStories(userID))
 
   return redirect(url_for(default))
 
@@ -87,6 +89,7 @@ def getStoryID(storyID):
     username = session['username']
     userID = db.getIDOfUser(username)
     storyID = int(storyID)
+    title = db.getStoryTitle()
 
     if db.hasContributed(userID, storyID):
       story = db.getStory(storyID)

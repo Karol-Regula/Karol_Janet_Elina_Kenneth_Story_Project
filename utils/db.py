@@ -56,7 +56,7 @@ def getLatestChapter(storyID):
 
 def getStory(storyID):
   print 'getStory %d' % storyID
-  return 'testStory %d' % storyID
+  return 'Placeholder Story Content %d' % storyID
 
 def isRegistered(username):
   global c
@@ -77,7 +77,7 @@ def getIDOfUser(username):
   out = c.fetchall()
   out = out[0]#list
   out = out[0]#tuple
-  #print out
+  print out
   closeDB()
   return out
 
@@ -88,7 +88,6 @@ def hasContributed(userID, storyID):
 def authUser(username, passhash):
   print 'authUser %s %s' % (username, passhash)
   global c
-  global db
   initializeDB()
   c.execute('SELECT password FROM users WHERE (username = \'%s\');' % username)
   out = c.fetchall()
@@ -103,3 +102,22 @@ def authUser(username, passhash):
 
 def changePassword():
   return true
+
+def getStoryTitle():
+  return "Placeholder Title"
+
+def getContributedStories(userID):
+  print 'getContributedStories'
+  global c
+  initializeDB()
+  c.execute('SELECT title FROM chapters WHERE (user_id = %d);' % userID)
+  out = c.fetchall()
+  titles = []
+  closeDB()
+  i = 0
+  print out
+  while i < len(out):
+    print out[i]
+    titles.append(str(out[i][0]))
+    i += 1
+  return titles
