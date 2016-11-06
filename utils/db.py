@@ -78,12 +78,12 @@ def getStory(storyID):
   c.execute('SELECT body FROM chapters WHERE (story_id = \'%s\');' % storyID)
   out = c.fetchall()
   closeDB()
-  story = ""
+  story = []
   i = 0
   while i < len(out):
     add = str(out[i])[3:]
     add = add[:-3]
-    story += '\n ' + add
+    story.append(add)
     i += 1
   return story
 
