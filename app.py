@@ -77,7 +77,7 @@ def logout():
 @app.route('/stories/')
 def stories():
   if isLoggedIn():
-    return render_template('home.html', user='NAME', avail_stories='FUNCTION TO PRINT STORIES AVAILABLE', written_stories='FUNCTION TO PRINT THE STORIES WRITTEN IN')
+    return render_template('home.html', user=session['username'], avail_stories='FUNCTION TO PRINT STORIES AVAILABLE', written_stories='FUNCTION TO PRINT THE STORIES WRITTEN IN')
 
   return redirect(url_for(default))
 
@@ -90,10 +90,10 @@ def getStoryID(storyID):
 
     if db.hasContributed(userID, storyID):
       story = db.getStory(storyID)
-      return render_template('full_story.html', user='NAME', title = title, story = story)
+      return render_template('full_story.html', user=session['username'], title = title, story = story)
     else:
       chapter = db.getLatestChapter(id)
-      return render_template('contribute_story.html', user='NAME', title = title, chapter = chapter)
+      return render_template('contribute_story.html', user=session['username'], title = title, chapter = chapter)
 
   return redirect(url_for('default'))
 
@@ -114,7 +114,7 @@ def postStoryID(storyID):
 @app.route('/stories/create/')
 def getCreate():
   if isLoggedIn():
-    return render_template('new_story.html', user='NAME')
+    return render_template('new_story.html', user=session['username'])
 
   return redirect(url_for('default'))
 
@@ -134,7 +134,7 @@ def postCreate():
 @app.route('/account/')
 def getAccount():
   if isLoggedIn():
-    return render_template('account.html', user='NAME')
+    return render_template('account.html', user=session['username'])
 
   return redirect(url_for('default'))
 
@@ -159,7 +159,7 @@ def postAccount():
     else:
       flash('Please fill out all fields!')
 
-    return render_template('account.html', user='NAME')
+    return render_template('account.html', user=session['username'])
   else:
     return redirect(url_for('default'))
 
