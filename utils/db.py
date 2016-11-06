@@ -157,7 +157,11 @@ def getContributedStories(userID):
   i = 0
   print out
   while i < len(out):
-    print str(out[i])
-    titles.append(str(out[i][0]) + "," +str(out[i][1]))
+    current = []
+    current.append(str(out[i][0]))
+    current.append(str(out[i][1]))
+    titles.append(current)
+    print(titles[i])
     i += 1
+  print titles
   return titles
