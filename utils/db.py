@@ -110,14 +110,14 @@ def getContributedStories(userID):
   print 'getContributedStories'
   global c
   initializeDB()
-  c.execute('SELECT title FROM chapters WHERE (user_id = %d);' % userID)
+  c.execute('SELECT title, story_id FROM chapters WHERE (user_id = %d);' % userID)
   out = c.fetchall()
   titles = []
   closeDB()
   i = 0
   print out
   while i < len(out):
-    print out[i]
-    titles.append(str(out[i][0]))
+    print str(out[i])
+    titles.append(str(out[i][0]) + "," +str(out[i][1]))
     i += 1
   return titles
