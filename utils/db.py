@@ -140,8 +140,15 @@ def authUser(username, passhash):
   print out == passhash
   return out == passhash
 
-def changePassword():
-  return true
+def changePassword(userID, passhash):
+  print 'changePassword %d' % userID
+  global c
+  initializeDB()
+  c.execute('UPDATE users SET password = \'%s\' WHERE (user_id = %d);' % (passhash, userID))
+  out = c.fetchall()
+  print out
+  closeDB()
+  return
 
 def getStoryTitle(storyID):
   print 'getStoryTitle %d' % storyID
