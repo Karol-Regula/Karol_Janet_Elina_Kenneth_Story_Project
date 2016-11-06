@@ -144,7 +144,15 @@ def changePassword():
   return true
 
 def getStoryTitle(storyID):
-  return "Placeholder Title"
+  print 'getStoryTitle %d' % storyID
+  global c
+  initializeDB()
+  c.execute('SELECT title FROM chapters WHERE (story_id = \'%s\');' % storyID)
+  out = c.fetchall()
+  closeDB()
+  title = ""
+  title = out[0][0]
+  return title
 
 def getContributedStories(userID):
   print 'getContributedStories'
@@ -159,7 +167,7 @@ def getContributedStories(userID):
   while i < len(out):
     current = []
     current.append(str(out[i][0]))
-    current.append(str(out[i][1]))
+    current.append(int(out[i][1]))
     titles.append(current)
     print(titles[i])
     i += 1
