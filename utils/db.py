@@ -44,7 +44,7 @@ def createStory(userID, title, body):
     out = out[-1]
     storyID = out[0] + 1
   print storyID
-  c.execute('INSERT INTO chapters (story_id, user_id, title, body) VALUES(\'%d\', \'%d\', \'%s\', \'%s\');' % (storyID, userID, title, body))
+  c.execute('INSERT INTO chapters (story_id, chapter_id, user_id, title, body) VALUES(\'%d\', \'%d\', \'%d\', \'%s\', \'%s\');' % (storyID, 0, userID, title, body))
   closeDB()
 
 def addChapter(storyID, userID, body):
