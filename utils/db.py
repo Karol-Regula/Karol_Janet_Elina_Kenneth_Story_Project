@@ -6,16 +6,15 @@ db = None
 
 def createDB():
   global c
-  initializeDB()
-  c.execute('CREATE TABLE users (user_id INTEGER PRIMARY KEY, username TEXT, password TEXT);')
-  c.execute('CREATE TABLE chapters (story_id INTEGER, chapter_id INTEGER, user_id INTEGER, title TEXT, body TEXT);')
-  closeDB()
+  c.execute('CREATE TABLE IF NOT EXISTS users (user_id INTEGER PRIMARY KEY, username TEXT, password TEXT);')
+  c.execute('CREATE TABLE IF NOT EXISTS chapters (story_id INTEGER, chapter_id INTEGER, user_id INTEGER, title TEXT, body TEXT);')
 
 def initializeDB():
   global c, db
   file = 'data/data.db'
   db = sqlite3.connect(file)
   c = db.cursor()
+  createDB()
 
 def closeDB():
   global db
@@ -53,7 +52,11 @@ def getLatestChapter(storyID):
   c.execute('SELECT body FROM chapters WHERE (story_id = \'%s\');' % storyID)
   out = c.fetchall()
   closeDB()
-  return out[-1][0]
+
+  if out:
+    return out[-1][0]
+  else:
+    return ''
 
 def getStory(storyID):
   initializeDB()
@@ -81,7 +84,10 @@ def getIDOfUser(username):
   out = c.fetchall()
   closeDB()
 
-  return out[0][0]
+  if out:
+    return out[0][0]
+  else:
+    return -1
 
 def hasContributed(userID, storyID):
   initializeDB()
@@ -101,10 +107,10 @@ def authUser(username, passhash):
   out = c.fetchall()
   closeDB()
 
-  if not out:
+  if out:
+    return out[0][0] == passhash
+  else:
     return False
-
-  return out[0][0] == passhash
 
 def changePassword(userID, passhash):
   initializeDB()
@@ -116,7 +122,11 @@ def getStoryTitle(storyID):
   c.execute('SELECT title FROM chapters WHERE (story_id = \'%s\');' % storyID)
   out = c.fetchall()
   closeDB()
-  return out[0][0]
+
+  if out:
+    return out[0][0]
+  else:
+    return ''
 
 def getContributedStories(userID):
   initializeDB()
