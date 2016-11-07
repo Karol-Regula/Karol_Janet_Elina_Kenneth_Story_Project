@@ -20,11 +20,6 @@ def default():
 
   return redirect(url_for('auth'))
 
-@app.route('/admin/')
-def createDB():
-  db.createDB()
-  return redirect(url_for('default'))
-
 @app.route('/auth/')
 def auth():
   if isLoggedIn():
