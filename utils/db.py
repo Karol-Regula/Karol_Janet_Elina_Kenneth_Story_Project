@@ -33,9 +33,9 @@ def createStory(userID, title, body):
   out = c.fetchall()
 
   if out:
-    storyID = 0
-  else:
     storyID = out[-1][0] + 1
+  else:
+    storyID = 0
 
   c.execute('INSERT INTO chapters (story_id, chapter_id, user_id, title, body) VALUES(\'%d\', \'%d\', \'%d\', \'%s\', \'%s\');' % (storyID, 0, userID, title, body))
   closeDB()
@@ -143,7 +143,7 @@ def getNotContributedStories(userID):
     append = True
     title = out[i][0]
     storyID = out[i][1]
-    current = titles.append([title, storyID])
+    current = [title, storyID]
 
     if not hasContributed(userID, storyID):
       if current not in titles:

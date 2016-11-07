@@ -5,7 +5,13 @@ app = Flask(__name__)
 app.secret_key = 'KEY'
 
 def isLoggedIn():
-  return 'username' in session
+  if 'username' in session:
+    if db.isRegistered(session['username']):
+      return True
+
+    session.pop('username')
+
+  return False
 
 @app.route('/')
 def default():
@@ -74,10 +80,13 @@ def stories():
   if isLoggedIn():
     username = session['username']
     userID = db.getIDOfUser(username)
+    avail_stories = db.getNotContributedStories(userID)
+    written_stories = db.getContributedStories(userID)
+    
     return render_template('home.html',
                            user = username,
-                           avail_stories = db.getNotContributedStories(userID),
-                           written_stories = db.getContributedStories(userID))
+                           avail_stories = avail_stories,
+                           written_stories = written_stories)
 
   return redirect(url_for('default'))
 
